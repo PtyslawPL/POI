@@ -19,13 +19,13 @@ def generate_cylinder(radius, height, num_points):
     y = radius * np.sin(theta)
     return np.vstack((x, y, z)).T
 
-def generate_all(x_range, y_range, z_range, radius, height, num_points):
-    x_hp = np.random.uniform(x_range[0], x_range[1], num_points)
+def generate_all(x_range, y_range, z_range, radius, offset, height, num_points):
+    x_hp = np.random.uniform(x_range[0] - offset, x_range[1] - offset, num_points)
     y_hp = np.random.uniform(y_range[0], y_range[1], num_points)
     z_hp = np.zeros(num_points)
     points_horizontal = np.vstack((x_hp, y_hp, z_hp)).T
 
-    x_vp = np.random.uniform(x_range[0], x_range[1], num_points)
+    x_vp = np.random.uniform(x_range[0] + offset, x_range[1] + offset, num_points)
     z_vp = np.random.uniform(z_range[0], z_range[1], num_points)
     y_vp = np.zeros(num_points)
     points_vertical = np.vstack((x_vp, y_vp, z_vp)).T
@@ -54,5 +54,5 @@ if __name__ == "__main__":
     points_cylinder = generate_cylinder(radius=5, height=10, num_points=num_points)
     save_to_xyz('cylinder_surface.xyz', points_cylinder)
 
-    points_all = generate_all(x_range=(-10, 10), y_range=(-10, 10), z_range=(-10, 10), radius=5, height=10, num_points=num_points)
+    points_all = generate_all(x_range=(-10, 10), y_range=(-10, 10), z_range=(-10, 10), offset = 20, radius=5, height=10, num_points=num_points)
     save_to_xyz('all_points.xyz', points_all)
